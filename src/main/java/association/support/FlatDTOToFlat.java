@@ -29,6 +29,9 @@ public class FlatDTOToFlat implements Converter<FlatDTO, Flat> {
 		}
 
 		flat.setAddress(dto.getAddress());
+		flat.setPresident(dto.getPresident());
+		flat.setNoOfApartments(dto.getNoOfApartments());
+		flat.setNoOfTenants(dto.getNoOfTenants());
 
 		return flat;
 	}

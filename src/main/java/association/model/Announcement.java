@@ -21,6 +21,14 @@ public class Announcement {
 	private Long id;
 	@Column(nullable = false, unique = true)
 	private String title;
+	@Column
+	private String type;
+	@Column
+	private Double percentageNeeded;
+	@Column
+	private boolean accepted = false;
+	@Column(nullable = false)
+	private String description;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Flat flat;
@@ -44,6 +52,38 @@ public class Announcement {
 		this.title = title;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Double getPercentageNeeded() {
+		return percentageNeeded;
+	}
+
+	public void setPercentageNeeded(Double percentageNeeded) {
+		this.percentageNeeded = percentageNeeded;
+	}
+
+	public boolean isAccepted() {
+		return accepted;
+	}
+
+	public void setAccepted(boolean accepted) {
+		this.accepted = accepted;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public Flat getFlat() {
 		return flat;
 	}
@@ -62,7 +102,7 @@ public class Announcement {
 	public void setVotes(List<Vote> votes) {
 		this.votes = votes;
 	}
-	
+
 	public void addVote(Vote vote) {
 		this.votes.add(vote);
 

@@ -18,8 +18,14 @@ public class Flat {
 	@GeneratedValue
 	@Column
 	private Long id;
-	@Column
+	@Column(nullable = false, unique=true)
 	private String address;
+	@Column(nullable = false)
+	private String president;
+	@Column
+	private Integer noOfApartments;
+	@Column(nullable = false)
+	private Integer noOfTenants;
 
 	@OneToMany(mappedBy = "flat", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Announcement> announcements = new ArrayList<>();
@@ -38,6 +44,30 @@ public class Flat {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getPresident() {
+		return president;
+	}
+
+	public void setPresident(String president) {
+		this.president = president;
+	}
+
+	public Integer getNoOfApartments() {
+		return noOfApartments;
+	}
+
+	public void setNoOfApartments(Integer noOfApartments) {
+		this.noOfApartments = noOfApartments;
+	}
+
+	public Integer getNoOfTenants() {
+		return noOfTenants;
+	}
+
+	public void setNoOfTenants(Integer noOfTenants) {
+		this.noOfTenants = noOfTenants;
 	}
 
 	public List<Announcement> getAnnouncements() {

@@ -18,6 +18,10 @@ public class AnnouncementToAnnouncementDTO implements Converter<Announcement, An
 
 		dto.setId(source.getId());
 		dto.setTitle(source.getTitle());
+		dto.setDescription(source.getDescription());
+		dto.setAccepted(source.isAccepted());
+		dto.setType(source.getType());
+		dto.setPercentageNeeded(source.getPercentageNeeded());
 
 		dto.setFlatId(source.getFlat().getId());
 		dto.setFlatAddress(source.getFlat().getAddress());

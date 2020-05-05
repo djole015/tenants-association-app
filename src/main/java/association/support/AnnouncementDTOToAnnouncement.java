@@ -36,6 +36,10 @@ public class AnnouncementDTOToAnnouncement implements Converter<AnnouncementDTO,
 			}
 
 			announcement.setTitle(dto.getTitle());
+			announcement.setDescription(dto.getDescription());
+			announcement.setType(dto.getType());
+			announcement.setAccepted(dto.isAccepted());
+			announcement.setPercentageNeeded(dto.getPercentageNeeded());
 
 			announcement.setFlat(flat);
 

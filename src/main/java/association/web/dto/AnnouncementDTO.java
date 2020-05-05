@@ -1,9 +1,21 @@
 package association.web.dto;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class AnnouncementDTO {
 
 	private Long id;
+	@NotEmpty
 	private String title;
+	private String type;
+	@Min(0)
+	@Max(100)
+	private Double percentageNeeded;
+	private boolean accepted = false;
+	private String description;
 
 	private Long flatId;
 	private String flatAddress;
@@ -22,6 +34,38 @@ public class AnnouncementDTO {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Double getPercentageNeeded() {
+		return percentageNeeded;
+	}
+
+	public void setPercentageNeeded(Double percentageNeeded) {
+		this.percentageNeeded = percentageNeeded;
+	}
+
+	public boolean isAccepted() {
+		return accepted;
+	}
+
+	public void setAccepted(boolean accepted) {
+		this.accepted = accepted;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Long getFlatId() {
