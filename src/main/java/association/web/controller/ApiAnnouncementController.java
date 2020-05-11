@@ -28,32 +28,28 @@ import association.web.dto.AnnouncementDTO;
 public class ApiAnnouncementController {
 	@Autowired
 	private AnnouncementService announcementService;
-	
+
 	@Autowired
 	private AnnouncementToAnnouncementDTO toDTO;
-	
+
 	@Autowired
 	AnnouncementDTOToAnnouncement toAnnouncement;
 
 	@RequestMapping(method = RequestMethod.GET)
 	ResponseEntity<List<AnnouncementDTO>> getAnnouncements(
-			@RequestParam(value = "pageNum", defaultValue = "0") int pageNum
-			) {
-	/*
-	 * @RequestParam(required = false) String ime,
-	 * 
-	 * @RequestParam(required = false) Long flatId,
-	 * 
-	 * 
-	 */
+			@RequestParam(required = false) String title,
+			@RequestParam(required = false) String type, 
+			@RequestParam(required = false) Long flatId,
+			@RequestParam(value = "pageNum", defaultValue = "0") int pageNum) {
 
 		Page<Announcement> announcementsPage;
 
-		/*
-		 * if (ime != null || sprintId != null ) { announcementiPage =
-		 * announcementService.search(ime, sprintId, pageNum); } else { }
-		 */
-		announcementsPage = announcementService.findAll(pageNum);
+		if (title != null || type != null || flatId != null) {
+			announcementsPage = announcementService.search(title, type, flatId, pageNum);
+		} else {
+
+			announcementsPage = announcementService.findAll(pageNum);
+		}
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("totalPages", Integer.toString(announcementsPage.getTotalPages()));
@@ -91,7 +87,8 @@ public class ApiAnnouncementController {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, value = "/{id}", consumes = "application/json")
-	public ResponseEntity<AnnouncementDTO> edit(@Validated @RequestBody AnnouncementDTO announcementDTO, @PathVariable Long id) {
+	public ResponseEntity<AnnouncementDTO> edit(@Validated @RequestBody AnnouncementDTO announcementDTO,
+			@PathVariable Long id) {
 
 		if (!id.equals(announcementDTO.getId())) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

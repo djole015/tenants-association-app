@@ -1,206 +1,182 @@
-var evidencijaApp = angular.module("evidencijaApp",["ngRoute"]);
+var associationApp = angular.module("associationApp",["ngRoute"]);
 
-evidencijaApp.controller("homeCtrl", function($scope){
-	$scope.message="Zavrsni ispit";
-});
-
-evidencijaApp.controller("zadaciCtrl", function($scope, $http, $location){
+associationApp.controller("announcementsCtrl", function($scope, $http, $location){
 	
-	$scope.zadaci = [];
-	$scope.sprintovi = [];
-	$scope.stanja = [];
+	$scope.announcements = [];
+	$scope.flats = [];
 
-	$scope.newZadatak = {};
-	$scope.newZadatak.ime = "";
+	$scope.newAnnouncement = {};
+	$scope.newAnnouncement.title = "";
+	$scope.newAnnouncement.type = "";
+	$scope.newAnnouncement.percentageNeeded = "";
+	$scope.newAnnouncement.description = "";
 
-	$scope.newZadatak.sprintId = "";
-	$scope.newZadatak.stanjeId = "";
+	$scope.newAnnouncement.flatId = "";
 	
 	$scope.pageNum = 0;
 	$scope.totalPages = 1;
 	
-	var zadaciUrl = "/api/zadaci";
-	var sprintoviUrl = "/api/sprintovi";
-	var stanjaUrl = "/api/stanja";
+	var announcementsUrl = "/api/announcements";
+	var flatsUrl = "/api/flats";
 	
 	$scope.searchParams = {};
-	$scope.searchParams.ime = "";
-	$scope.searchParams.sprintId = "";
+	$scope.searchParams.title = "";
+	$scope.searchParams.type = "";
+	$scope.searchParams.flatId = "";
 	
-	var getZadaci = function(){
+	var getAnnouncements = function(){
 		
 		var config = { params: {} };
 		
-		if($scope.searchParams.ime != ""){
-		config.params.ime = $scope.searchParams.ime;
+		if($scope.searchParams.title != ""){
+		config.params.title = $scope.searchParams.title;
+		}
+		
+		if($scope.searchParams.type != ""){
+		config.params.type = $scope.searchParams.type;
 		}
 	
-		if($scope.searchParams.sprintId != ""){
-		config.params.sprintId = $scope.searchParams.sprintId;
+		if($scope.searchParams.flatId != ""){
+		config.params.flatId = $scope.searchParams.flatId;
 		}
 		
 		config.params.pageNum = $scope.pageNum;
 		
-		var promise = $http.get(zadaciUrl, config);
-		promise.then(
+		$http.get(announcementsUrl, config).then(
 			function success(res){
-				$scope.zadaci = res.data;
+				$scope.announcements = res.data;
 				$scope.totalPages = res.headers("totalPages");
+				getFlats();
 			},
 			function error(){
-				alert("Neupešno dobavljanje zadataka.");
+				alert("Fetching announcements failed.");
 			}
 		);
 	}
-	
-	getZadaci();
-	
-	
-	var getSprintovi = function(){
-		$http.get(sprintoviUrl).then(
+
+	var getFlats = function(){
+		$http.get(flatsUrl).then(
 			function success(res){
-				$scope.sprintovi = res.data;
+				$scope.flats = res.data;
 			},
 			function error(){
-				alert("Neuspešno dobavljanje sprintova.");
+				alert("Fetching flats failed.");
 			}
 		);
 	}
 	
-	getSprintovi();
-	
-	var getStanja = function(){
-		$http.get(stanjaUrl).then(
-			function success(res){
-				$scope.stanja = res.data;
-			},
-			function error(){
-				alert("Neuspešno dobavljanje stanja.");
-			}
-		);
-	}
-	
-	getStanja();
+	getAnnouncements();
 	
 	$scope.doAdd = function(){
 		
-		$http.post(zadaciUrl, $scope.newZadatak).then(
+		$http.post(announcementsUrl, $scope.newAnnouncement).then(
 			function success(){
-				getZadaci();
+				getAnnouncements();
 				
-				$scope.newZadatak.ime = "";
+				$scope.newAnnouncement.title = "";
+				$scope.newAnnouncement.type = "";
+				$scope.newAnnouncement.percentageNeeded = "";
+				$scope.newAnnouncement.description = "";
 
-				$scope.newZadatak.sprintId = "";
-				$scope.newZadatak.stanjeId = "";
+				$scope.newAnnouncement.flatId = "";
+				
 			},
 			function error(){
-				alert("Neuspešno čuvanje zadatka!");
+				alert("Saving announcement failed!");
 			}
 		);
 	}
 	
 	$scope.doDelete = function(id){
-		$http.delete(zadaciUrl + "/" + id).then(
+		$http.delete(announcementsUrl + "/" + id).then(
 			function success(){
-				getZadaci();
+				getAnnouncements();
 			},
 			function error(){
-				alert("Neuspešno brisanje zadatka.");
+				alert("Removing announcement failed.");
 			}
 		);
+	}
+	
+	$scope.doSearch = function(){
+		$scope.pageNum = 0;
+		getAnnouncements();
+		
+		$scope.searchParams.title = "";
+		$scope.searchParams.type = "";
+		
+		$scope.searchParams.flatId = "";
+	}
+	
+	$scope.changePage = function(direction){
+		$scope.pageNum = $scope.pageNum + direction;
+		getAnnouncements();
 	}
 	
 	$scope.goToEdit = function(id){
 		$location.path("/edit/" + id);
 	}
 	
-	$scope.doSearch = function(){
-		$scope.pageNum = 0;
-		getZadaci();
-		
-		$scope.searchParams.ime = "";
-		$scope.searchParams.sprintId = "";
-	}
-	
-	$scope.changePage = function(direction){
-		$scope.pageNum = $scope.pageNum + direction;
-		getZadaci();
-	}
-	
 });
 
-evidencijaApp.controller("editZadatakCtrl", function($scope, $http, $routeParams, $location){
+associationApp.controller("editAnnouncementCtrl", function($scope, $http, $routeParams, $location){
 	
-	var zadatakUrl = "/api/zadaci/" + $routeParams.id;
-	var sprintoviUrl = "/api/sprintovi";
-	var stanjaUrl = "/api/stanja";
+	var announcementUrl = "/api/announcements/" + $routeParams.id;
+	var flatsUrl = "/api/flats";
 
-	$scope.sprintovi = [];
-	$scope.stanja = [];
+	$scope.flats = [];
 	
-	$scope.zadatak = {};
-	$scope.zadatak.ime = "";
+	$scope.announcement = {};
+	$scope.announcement.title = "";
+	$scope.announcement.type = "";
+	$scope.announcement.percentageNeeded = "";
+	$scope.announcement.description = "";
 
-	$scope.zadatak.stanjeId = "";
-	$scope.zadatak.sprintId = "";
+	$scope.announcement.flatId = "";
 	
-	var getStanja = function(){
-		$http.get(stanjaUrl).then(
+	var getAnnouncement = function(){
+		$http.get(announcementUrl).then(
 			function success(res){
-				$scope.stanja = res.data;
-				getSprintovi();
+				$scope.announcement = res.data;
 			},
 			function error(){
-				alert("Neuspešno dobavljanje stanja.");
+				alert("Fetching announcement failed.");
 			}
 		);
 	}
 	
-	var getSprintovi = function(){
-		$http.get(sprintoviUrl).then(
+	var getFlats = function(){
+		$http.get(flatsUrl).then(
 			function success(res){
-				$scope.sprintovi = res.data;
-				getZadatak();
+				$scope.flats = res.data;
 			},
 			function error(){
-				alert("Neuspešno dobavljanje sprintova.");
+				alert("Fetching flats failed.");
 			}
 		);
 	}
-	
-	var getZadatak = function(){
-		$http.get(zadatakUrl).then(
-			function success(res){
-				$scope.zadatak = res.data;
-			},
-			function error(){
-				alert("Neuspešno dobavljanje zadatka.");
-			}
-		);
-	}
-	
-	getStanja();
+	getFlats();
+	getAnnouncement();
 	
 	$scope.doEdit = function(){
-		$http.put(zadatakUrl, $scope.zadatak).then(
+		$http.put(announcementUrl, $scope.announcement).then(
 			function success(){
 				$location.path("/");
 			},
 			function error(){
-				alert("Neuspešno čuvanje zadatka.");
+				alert("Saving announcement failed.");
 			}
 		);
 	}
 });
 
-
-evidencijaApp.config(['$routeProvider', function($routeProvider) {
+associationApp.config(['$routeProvider', function($routeProvider) {
 	$routeProvider
 		.when('/', {
-			templateUrl : '/app/html/zadaci.html'
+			templateUrl : '/app/html/announcements.html'
 		})
 		.when('/edit/:id', {
-			templateUrl : '/app/html/edit-zadatak.html'
+			templateUrl : '/app/html/edit-announcement.html'
 		})
 		.otherwise({
 			redirectTo: '/'

@@ -1,0 +1,100 @@
+<div ng-controller="announcementsCtrl">
+
+	<form>
+
+		<div class="form-group">
+			<label for="title">Title</label> 
+			<input id="title" class="form-control" ng-model="newAnnouncement.title" />
+		</div>
+
+		<div class="form-group">
+			<label for="type">Type</label> 
+			<select id="type" class="form-control" ng-model="newAnnouncement.type">
+				<option value="notice">Notice</option>
+				<option value="proposal">Proposal</option>
+			</select>
+		</div>
+
+		<div class="form-group">
+			<label for="description">Description</label> 
+			<input id="description" class="form-control" ng-model="newAnnouncement.description" />
+		</div>
+
+		<div class="form-group" ng-show="newAnnouncement.type == 'proposal'">
+			<label for="percentage">Required Percentage</label>
+			 <input  id="percentage" class="form-control" ng-model="newAnnouncement.percentageNeeded" />
+		</div>
+
+		<div class="form-group">
+			<label for="flat">Flat</label> 
+			<select id="flat" class="form-control" ng-model="newAnnouncement.flatId">
+				<option ng-repeat="flat in flats" value="{{flat.id}}">{{flat.address}}</option>
+			</select>
+		</div>
+
+		<button class="btn btn-primary" ng-click="doAdd()">Add</button>
+
+	</form>
+
+	<form>
+
+		<div class="form-group">
+			<label for="flat">Flat</label> <select id="flat" class="form-control"
+				ng-model="searchParams.flatId">
+				<option ng-repeat="flat in flats" value="{{flat.id}}">{{flat.address}}</option>
+			</select>
+		</div>
+
+		<div class="form-group">
+			<label for="title">Title</label> <input id="title"
+				class="form-control" ng-model="searchParams.title" />
+		</div>
+
+		<div class="form-group">
+			<label for="type">Type</label> <input id="type" class="form-control"
+				ng-model="searchParams.type" />
+		</div>
+
+		<button class="btn btn-primary" ng-click="doSearch()">Search</button>
+
+	</form>
+
+
+	<div class="col-12">
+		<div style="margin-bottom: 10px" class="btn-group float-right">
+			<button ng-disabled="pageNum==0" ng-click="changePage(-1)"
+				class="btn btn-primary">Prethodna</button>
+			<button ng-disabled="pageNum==totalPages - 1"
+				ng-click="changePage(1)" class="btn btn-primary">Sledeca</button>
+		</div>
+	</div>
+
+
+	<table class="table table-bordered table-striped">
+		<thead class="thead-dark">
+			<tr>
+				<th>Title</th>
+				<th>Type</th>
+				<th>Description</th>
+				<th>Required Percentage</th>
+				<th>Flat</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="a in announcements">
+				<td>{{a.title}}</td>
+				<td>{{a.type}}</td>
+				<td>{{a.description}}</td>
+				<td>{{a.percentageNeeded}}</td>
+				
+				<td>{{a.flatAddress}}</td>
+				<td>
+					<button class="btn btn-warning" ng-click="goToEdit(a.id)">Change</button>
+					<button class="btn btn-danger" ng-click="doDelete(a.id)">Delete</button>
+					<button class="btn btn-success" ng-click="doVote(a.id)">Vote</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

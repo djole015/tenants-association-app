@@ -48,4 +48,18 @@ public class JpaAnnouncementService implements AnnouncementService {
 		return announcementRepository.findByFlatId(flatId);
 	}
 
+	@Override
+	public Page<Announcement> search(String title, String type, Long flatId, int pageNum) {
+		
+		if(title != null ){
+			title = "%" + title + "%";
+		}
+		
+		if(type != null ){
+			type = "%" + type + "%";
+		}
+		
+		return announcementRepository.search(title, type, flatId, new PageRequest(pageNum, 5));
+	}
+
 }

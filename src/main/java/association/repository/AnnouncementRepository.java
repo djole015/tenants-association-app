@@ -14,17 +14,17 @@ import association.model.Announcement;
 @Repository
 public interface AnnouncementRepository extends JpaRepository<Announcement, Long>{
 
-	List<Announcement> findByFlatId(Long flatId);
-	
-	/*
-	 * @Query("SELECT z FROM Zadatak z WHERE " +
-	 * "(:ime IS NULL or z.ime = :ime ) AND " +
-	 * "(:sprintId IS NULL or z.sprint.id = :sprintId )" ) Page<Announcement>
-	 * search(
-	 * 
-	 * @Param("ime") String ime,
-	 * 
-	 * @Param("sprintId") Long sprintId, Pageable pageRequest);
-	 */
+	  List<Announcement> findByFlatId(Long flatId);
+
+
+	  @Query("SELECT a FROM Announcement a WHERE " +
+	  "(:title IS NULL or a.title LIKE :title ) AND " +
+	  "(:type IS NULL or a.type LIKE :type ) AND " +
+	  "(:flatId IS NULL or a.flat.id = :flatId )" )
+	  Page<Announcement> search(
+			@Param("title") String title, 
+			@Param("type") String type, 
+			@Param("flatId") Long flatId, 
+			Pageable pageRequest);
 	
 }

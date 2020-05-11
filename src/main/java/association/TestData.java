@@ -78,6 +78,7 @@ public class TestData {
 		a4.setTitle("facade painting");
 		a4.setDescription("in favor or against");
 		a4.setType("proposal");
+		a4.setPercentageNeeded(66D);
 		a4.setFlat(f3);
 
 		announcementService.save(a4);

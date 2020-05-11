@@ -18,4 +18,6 @@ public interface AnnouncementService {
 
 	List<Announcement> findByFlatId(Long flatId);
 
+	Page<Announcement> search(String title, String type, Long flatId, int pageNum);
+
 }
