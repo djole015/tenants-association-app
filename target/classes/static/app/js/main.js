@@ -4,7 +4,7 @@ associationApp.controller("announcementsCtrl", function($scope, $http, $location
 	
 	$scope.announcements = [];
 	$scope.flats = [];
-
+	
 	$scope.newAnnouncement = {};
 	$scope.newAnnouncement.title = "";
 	$scope.newAnnouncement.type = "";
@@ -67,6 +67,17 @@ associationApp.controller("announcementsCtrl", function($scope, $http, $location
 	
 	getAnnouncements();
 	
+	var getAnnouncement = function(id){
+		$http.get(announcementsUrl + "/" + id).then(
+				function success(res){
+					$scope.announcement = res.data;
+				},
+				function error(){
+					alert("Fetching announcement failed.");
+				}
+			);
+	}
+	
 	$scope.doAdd = function(){
 		
 		$http.post(announcementsUrl, $scope.newAnnouncement).then(
@@ -115,6 +126,10 @@ associationApp.controller("announcementsCtrl", function($scope, $http, $location
 	
 	$scope.goToEdit = function(id){
 		$location.path("/edit/" + id);
+	}
+	
+	$scope.goToVote = function(id){
+		$location.path("/vote/" + id);
 	}
 	
 });
@@ -177,6 +192,9 @@ associationApp.config(['$routeProvider', function($routeProvider) {
 		})
 		.when('/edit/:id', {
 			templateUrl : '/app/html/edit-announcement.html'
+		})
+		.when('/vote/:id', {
+			templateUrl : '/app/html/vote.html'
 		})
 		.otherwise({
 			redirectTo: '/'
