@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 import association.model.Announcement;
+import association.model.Vote;
 
 public interface AnnouncementService {
 
@@ -19,5 +20,7 @@ public interface AnnouncementService {
 	List<Announcement> findByFlatId(Long flatId);
 
 	Page<Announcement> search(String title, String type, Long flatId, int pageNum);
+
+	void performCheck(Vote savedVote);
 
 }

@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import association.model.Announcement;
+import association.model.Vote;
 import association.repository.AnnouncementRepository;
 import association.service.AnnouncementService;
 
@@ -50,16 +51,42 @@ public class JpaAnnouncementService implements AnnouncementService {
 
 	@Override
 	public Page<Announcement> search(String title, String type, Long flatId, int pageNum) {
-		
-		if(title != null ){
+
+		if (title != null) {
 			title = "%" + title + "%";
 		}
-		
-		if(type != null ){
+
+		if (type != null) {
 			type = "%" + type + "%";
 		}
-		
+
 		return announcementRepository.search(title, type, flatId, new PageRequest(pageNum, 5));
+	}
+
+	@Override
+	public void performCheck(Vote savedVote) {
+
+		int positiveVotes = 0;
+
+		Announcement announcement = savedVote.getAnnouncement();
+
+		double percentageneeded = announcement.getPercentageNeeded();
+
+		int numberOfTenants = announcement.getFlat().getNoOfTenants();
+
+		List<Vote> votes = announcement.getVotes();
+
+		for (Vote vote : votes) {
+			if (vote.getAccept().equals("yes")) {
+				positiveVotes++;
+			}
+		}
+
+		if ((positiveVotes / numberOfTenants) * 100 >= percentageneeded) {
+			announcement.setAccepted(true);
+			announcementRepository.save(announcement);
+		}
+
 	}
 
 }

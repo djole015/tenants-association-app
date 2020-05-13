@@ -195,6 +195,7 @@ associationApp.controller("editAnnouncementCtrl", function($scope, $http, $route
 		$http.post("/api/votes/", $scope.vote).then(
 				function success(){
 					alert("Vote successfully saved");
+					$location.path("/");
 				},
 				function error(){
 					alert("Saving vote failed.");

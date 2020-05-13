@@ -45,8 +45,8 @@ public class TestData {
 		Flat f3 = new Flat();
 		f3.setAddress("Cerska 3");
 		f3.setPresident("Laza Lazic");
-		f3.setNoOfApartments(64);
-		f3.setNoOfTenants(120);
+		f3.setNoOfApartments(1);
+		f3.setNoOfTenants(3);
 
 		flatService.save(f3);
 
@@ -82,18 +82,6 @@ public class TestData {
 		a4.setFlat(f3);
 
 		announcementService.save(a4);
-
-		Vote v1 = new Vote();
-		v1.setAccept("yes");
-		v1.setAnnouncement(a2);
-
-		voteService.save(v1);
-
-		Vote v2 = new Vote();
-		v2.setAccept("no");
-		v2.setAnnouncement(a4);
-
-		voteService.save(v2);
 
 	}
 
