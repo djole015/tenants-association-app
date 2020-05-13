@@ -70,7 +70,7 @@ public class JpaAnnouncementService implements AnnouncementService {
 
 		Announcement announcement = savedVote.getAnnouncement();
 
-		double percentageneeded = announcement.getPercentageNeeded();
+		double percentageNeeded = announcement.getPercentageNeeded();
 
 		int numberOfTenants = announcement.getFlat().getNoOfTenants();
 
@@ -78,11 +78,11 @@ public class JpaAnnouncementService implements AnnouncementService {
 
 		for (Vote vote : votes) {
 			if (vote.getAccept().equals("yes")) {
-				positiveVotes++;
+				positiveVotes = positiveVotes + 1;
 			}
 		}
 
-		if ((positiveVotes / numberOfTenants) * 100 >= percentageneeded) {
+		if ((positiveVotes * 100  / numberOfTenants) >= percentageNeeded) {
 			announcement.setAccepted(true);
 			announcementRepository.save(announcement);
 		}
