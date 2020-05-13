@@ -6,19 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import association.model.Flat;
-import association.model.Vote;
 import association.model.Announcement;
 import association.service.FlatService;
-import association.service.VoteService;
 import association.service.AnnouncementService;
 
 @Component
 public class TestData {
 	@Autowired
 	private AnnouncementService announcementService;
-
-	@Autowired
-	private VoteService voteService;
 
 	@Autowired
 	private FlatService flatService;

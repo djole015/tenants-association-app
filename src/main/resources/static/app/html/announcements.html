@@ -92,7 +92,7 @@
 				<td>
 					<button class="btn btn-warning" ng-click="goToEdit(a.id)">Change</button>
 					<button class="btn btn-danger" ng-click="doDelete(a.id)">Delete</button>
-					<button class="btn btn-success" ng-show="a.type == 'proposal'" ng-click="goToVote(a.id)">Vote</button>
+					<button class="btn btn-success" ng-disabled="a.flatNoOfTenants == a.noOfVotes" ng-show="a.type == 'proposal'" ng-click="goToVote(a.id)">Vote</button>
 				</td>
 			</tr>
 		</tbody>

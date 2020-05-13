@@ -19,6 +19,9 @@ public class AnnouncementDTO {
 
 	private Long flatId;
 	private String flatAddress;
+	private Integer flatNoOfTenants;
+
+	private Integer noOfVotes;
 
 	public Long getId() {
 		return id;
@@ -82,6 +85,22 @@ public class AnnouncementDTO {
 
 	public void setFlatAddress(String flatAddress) {
 		this.flatAddress = flatAddress;
+	}
+
+	public Integer getFlatNoOfTenants() {
+		return flatNoOfTenants;
+	}
+
+	public void setFlatNoOfTenants(Integer flatNoOfTenants) {
+		this.flatNoOfTenants = flatNoOfTenants;
+	}
+
+	public Integer getNoOfVotes() {
+		return noOfVotes;
+	}
+
+	public void setNoOfVotes(Integer noOfVotes) {
+		this.noOfVotes = noOfVotes;
 	}
 
 }

@@ -25,6 +25,9 @@ public class AnnouncementToAnnouncementDTO implements Converter<Announcement, An
 
 		dto.setFlatId(source.getFlat().getId());
 		dto.setFlatAddress(source.getFlat().getAddress());
+		dto.setFlatNoOfTenants(source.getFlat().getNoOfTenants());
+		
+		dto.setNoOfVotes(source.getVotes().size());
 
 		return dto;
 	}
