@@ -4,10 +4,7 @@
 	<h4 ng-model="announcement">Title: {{announcement.title}} </h4>
 	<br/><br/>
 	
-	<button class="btn btn-success" ng-click="doAdd()">In Favor</button>
-	<button class="btn btn-danger" ng-click="doAdd()">Against</button>
-	
-
-
+	<button class="btn btn-success" ng-click="voteFor(announcement.id)">In Favor</button>
+	<button class="btn btn-danger" ng-click="voteAgainst(announcement.id)">Against</button>
 
 </div>

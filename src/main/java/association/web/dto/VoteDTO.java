@@ -6,7 +6,6 @@ public class VoteDTO {
 	private String accept;
 
 	private Long announcementId;
-	private String announcementTitle;
 
 	public Long getId() {
 		return id;
@@ -30,14 +29,6 @@ public class VoteDTO {
 
 	public void setAnnouncementId(Long announcementId) {
 		this.announcementId = announcementId;
-	}
-
-	public String getAnnouncementTitle() {
-		return announcementTitle;
-	}
-
-	public void setAnnouncementTitle(String announcementTitle) {
-		this.announcementTitle = announcementTitle;
 	}
 
 }

@@ -36,10 +36,8 @@ public class ApiAnnouncementController {
 	AnnouncementDTOToAnnouncement toAnnouncement;
 
 	@RequestMapping(method = RequestMethod.GET)
-	ResponseEntity<List<AnnouncementDTO>> getAnnouncements(
-			@RequestParam(required = false) String title,
-			@RequestParam(required = false) String type, 
-			@RequestParam(required = false) Long flatId,
+	ResponseEntity<List<AnnouncementDTO>> getAnnouncements(@RequestParam(required = false) String title,
+			@RequestParam(required = false) String type, @RequestParam(required = false) Long flatId,
 			@RequestParam(value = "pageNum", defaultValue = "0") int pageNum) {
 
 		Page<Announcement> announcementsPage;

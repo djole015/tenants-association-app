@@ -149,6 +149,10 @@ associationApp.controller("editAnnouncementCtrl", function($scope, $http, $route
 
 	$scope.announcement.flatId = "";
 	
+	$scope.vote = {};
+	$scope.vote.accept = "";
+	$scope.vote.announcementId = "";
+	
 	var getAnnouncement = function(){
 		$http.get(announcementUrl).then(
 			function success(res){
@@ -181,6 +185,35 @@ associationApp.controller("editAnnouncementCtrl", function($scope, $http, $route
 			function error(){
 				alert("Saving announcement failed.");
 			}
+		);
+	}
+	
+	$scope.voteFor = function(id){
+		$scope.vote.accept = "yes";
+		$scope.vote.announcementId = id;
+		
+		$http.post("/api/votes/", $scope.vote).then(
+				function success(){
+					alert("Vote successfully saved");
+				},
+				function error(){
+					alert("Saving vote failed.");
+				}
+		);
+	}
+	
+	$scope.voteAgainst = function(id){
+		$scope.vote.accept = "no";
+		$scope.vote.announcementId = id;
+		
+		$http.post("/api/votes/", $scope.vote).then(
+				function success(){
+					alert("Vote successfully saved");
+					$location.path("/");
+				},
+				function error(){
+					alert("Saving vote failed.");
+				}
 		);
 	}
 });

@@ -110,5 +110,7 @@ public class Announcement {
 			vote.setAnnouncement(this);
 		}
 	}
+	
+	
 
 }

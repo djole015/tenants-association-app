@@ -5,14 +5,19 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import association.model.Announcement;
 import association.model.Vote;
 import association.service.VoteService;
+import association.support.VoteDTOToVote;
 import association.support.VoteToVoteDTO;
+import association.web.dto.AnnouncementDTO;
 import association.web.dto.VoteDTO;
 
 @RestController
@@ -23,6 +28,9 @@ public class ApiVoteController {
 	
 	@Autowired
 	private VoteToVoteDTO toDTO;
+	
+	@Autowired
+	private VoteDTOToVote toVote;
 	
 	@RequestMapping(method=RequestMethod.GET)
 	ResponseEntity<List<VoteDTO>> getVotes() {
@@ -50,6 +58,14 @@ public class ApiVoteController {
 		return new ResponseEntity<>(
 				toDTO.convert(vote),
 				HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<VoteDTO> add(@RequestBody VoteDTO newVoteDTO) {
+
+		Vote savedVote = voteService.save(toVote.convert(newVoteDTO));
+
+		return new ResponseEntity<>(toDTO.convert(savedVote), HttpStatus.CREATED);
 	}
 	
 }
