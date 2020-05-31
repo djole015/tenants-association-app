@@ -153,16 +153,6 @@ associationApp.controller("editAnnouncementCtrl", function($scope, $http, $route
 	$scope.vote.accept = "";
 	$scope.vote.announcementId = "";
 	
-	var getAnnouncement = function(){
-		$http.get(announcementUrl).then(
-			function success(res){
-				$scope.announcement = res.data;
-			},
-			function error(){
-				alert("Fetching announcement failed.");
-			}
-		);
-	}
 	
 	var getFlats = function(){
 		$http.get(flatsUrl).then(
@@ -174,6 +164,18 @@ associationApp.controller("editAnnouncementCtrl", function($scope, $http, $route
 			}
 		);
 	}
+	
+	var getAnnouncement = function(){
+		$http.get(announcementUrl).then(
+			function success(res){
+				$scope.announcement = res.data;
+			},
+			function error(){
+				alert("Fetching announcement failed.");
+			}
+		);
+	}
+
 	getFlats();
 	getAnnouncement();
 	
