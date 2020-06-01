@@ -34,9 +34,12 @@
 
 		<button class="btn btn-primary" ng-click="doAdd()">Add</button>
 
-	</form>
+	</form><br><br>
 	
-	<form>
+	<input type="checkbox" id="form" ng-model="search">
+	<label for="form"> Show Search Form </label><br><br>
+	
+	<form ng-show="search">
 
 		<div class="form-group">
 			<label for="flat">Flat</label> <select id="flat" class="form-control"
