@@ -9,19 +9,19 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import association.model.Announcement;
+import association.model.Message;
 
 @Repository
-public interface AnnouncementRepository extends JpaRepository<Announcement, Long>{
+public interface MessageRepository extends JpaRepository<Message, Long>{
 
-	  List<Announcement> findByFlatId(Long flatId);
+	  List<Message> findByFlatId(Long flatId);
 
 
-	  @Query("SELECT a FROM Announcement a WHERE " +
-	  "(:title IS NULL or a.title LIKE :title ) AND " +
-	  "(:type IS NULL or a.type LIKE :type ) AND " +
-	  "(:flatId IS NULL or a.flat.id = :flatId )" )
-	  Page<Announcement> search(
+	  @Query("SELECT m FROM Message m WHERE " +
+	  "(:title IS NULL or m.title LIKE :title ) AND " +
+	  "(:type IS NULL or m.type LIKE :type ) AND " +
+	  "(:flatId IS NULL or m.flat.id = :flatId )" )
+	  Page<Message> search(
 			@Param("title") String title, 
 			@Param("type") String type, 
 			@Param("flatId") Long flatId, 

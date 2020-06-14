@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import association.model.Announcement;
+import association.model.Message;
 import association.model.Flat;
-import association.service.AnnouncementService;
+import association.service.MessageService;
 import association.service.FlatService;
-import association.support.AnnouncementToAnnouncementDTO;
+import association.support.MessageToMessageDTO;
 import association.support.FlatToFlatDTO;
-import association.web.dto.AnnouncementDTO;
+import association.web.dto.MessageDTO;
 import association.web.dto.FlatDTO;
 
 @RestController
@@ -29,10 +29,10 @@ public class ApiFlatController {
 	private FlatToFlatDTO toDTO;
 
 	@Autowired
-	private AnnouncementToAnnouncementDTO toAnnouncementDTO;
+	private MessageToMessageDTO toMessageDTO;
 
 	@Autowired
-	private AnnouncementService announcementService;
+	private MessageService messageService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	ResponseEntity<List<FlatDTO>> getFlats() {
@@ -56,16 +56,16 @@ public class ApiFlatController {
 		return new ResponseEntity<>(toDTO.convert(flat), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/{id}/announcements", method = RequestMethod.GET)
-	ResponseEntity<List<AnnouncementDTO>> getAnnouncements(@PathVariable("id") Long flatId) {
+	@RequestMapping(value = "/{id}/messages", method = RequestMethod.GET)
+	ResponseEntity<List<MessageDTO>> getMessages(@PathVariable("id") Long flatId) {
 
-		List<Announcement> announcements = announcementService.findByFlatId(flatId);
+		List<Message> messages = messageService.findByFlatId(flatId);
 
-		if (announcements == null) {
+		if (messages == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<>(toAnnouncementDTO.convert(announcements), HttpStatus.OK);
+		return new ResponseEntity<>(toMessageDTO.convert(messages), HttpStatus.OK);
 	}
 
 }

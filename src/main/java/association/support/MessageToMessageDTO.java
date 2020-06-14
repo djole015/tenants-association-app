@@ -6,15 +6,15 @@ import java.util.List;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import association.model.Announcement;
-import association.web.dto.AnnouncementDTO;
+import association.model.Message;
+import association.web.dto.MessageDTO;
 
 @Component
-public class AnnouncementToAnnouncementDTO implements Converter<Announcement, AnnouncementDTO> {
+public class MessageToMessageDTO implements Converter<Message, MessageDTO> {
 
 	@Override
-	public AnnouncementDTO convert(association.model.Announcement source) {
-		AnnouncementDTO dto = new AnnouncementDTO();
+	public MessageDTO convert(Message source) {
+		MessageDTO dto = new MessageDTO();
 
 		dto.setId(source.getId());
 		dto.setTitle(source.getTitle());
@@ -32,10 +32,10 @@ public class AnnouncementToAnnouncementDTO implements Converter<Announcement, An
 		return dto;
 	}
 
-	public List<AnnouncementDTO> convert(List<Announcement> sourceList) {
-		List<AnnouncementDTO> dtoList = new ArrayList<>();
+	public List<MessageDTO> convert(List<Message> sourceList) {
+		List<MessageDTO> dtoList = new ArrayList<>();
 
-		for (Announcement source : sourceList) {
+		for (Message source : sourceList) {
 			dtoList.add(convert(source));
 		}
 

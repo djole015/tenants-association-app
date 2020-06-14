@@ -5,7 +5,7 @@ public class VoteDTO {
 	private Long id;
 	private String accept;
 
-	private Long announcementId;
+	private Long messageId;
 
 	public Long getId() {
 		return id;
@@ -23,12 +23,12 @@ public class VoteDTO {
 		this.accept = accept;
 	}
 
-	public Long getAnnouncementId() {
-		return announcementId;
+	public Long getMessageId() {
+		return messageId;
 	}
 
-	public void setAnnouncementId(Long announcementId) {
-		this.announcementId = announcementId;
+	public void setMessageId(Long messageId) {
+		this.messageId = messageId;
 	}
 
 }

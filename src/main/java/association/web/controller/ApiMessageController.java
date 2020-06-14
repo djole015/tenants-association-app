@@ -17,57 +17,57 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import association.model.Announcement;
-import association.service.AnnouncementService;
-import association.support.AnnouncementDTOToAnnouncement;
-import association.support.AnnouncementToAnnouncementDTO;
-import association.web.dto.AnnouncementDTO;
+import association.model.Message;
+import association.service.MessageService;
+import association.support.MessageDTOToMessage;
+import association.support.MessageToMessageDTO;
+import association.web.dto.MessageDTO;
 
 @RestController
-@RequestMapping(value = "/api/announcements")
-public class ApiAnnouncementController {
+@RequestMapping(value = "/api/messages")
+public class ApiMessageController {
 	@Autowired
-	private AnnouncementService announcementService;
+	private MessageService messageService;
 
 	@Autowired
-	private AnnouncementToAnnouncementDTO toDTO;
+	private MessageToMessageDTO toDTO;
 
 	@Autowired
-	AnnouncementDTOToAnnouncement toAnnouncement;
+	MessageDTOToMessage toMessage;
 
 	@RequestMapping(method = RequestMethod.GET)
-	ResponseEntity<List<AnnouncementDTO>> getAnnouncements(@RequestParam(required = false) String title,
+	ResponseEntity<List<MessageDTO>> getMessages(@RequestParam(required = false) String title,
 			@RequestParam(required = false) String type, @RequestParam(required = false) Long flatId,
 			@RequestParam(value = "pageNum", defaultValue = "0") int pageNum) {
 
-		Page<Announcement> announcementsPage;
+		Page<Message> messagesPage;
 
 		if (title != null || type != null || flatId != null) {
-			announcementsPage = announcementService.search(title, type, flatId, pageNum);
+			messagesPage = messageService.search(title, type, flatId, pageNum);
 		} else {
 
-			announcementsPage = announcementService.findAll(pageNum);
+			messagesPage = messageService.findAll(pageNum);
 		}
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("totalPages", Integer.toString(announcementsPage.getTotalPages()));
+		headers.add("totalPages", Integer.toString(messagesPage.getTotalPages()));
 
-		return new ResponseEntity<>(toDTO.convert(announcementsPage.getContent()), headers, HttpStatus.OK);
+		return new ResponseEntity<>(toDTO.convert(messagesPage.getContent()), headers, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	ResponseEntity<AnnouncementDTO> getAnnouncement(@PathVariable Long id) {
-		Announcement announcement = announcementService.findOne(id);
-		if (announcement == null) {
+	ResponseEntity<MessageDTO> getMessage(@PathVariable Long id) {
+		Message message = messageService.findOne(id);
+		if (message == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<>(toDTO.convert(announcement), HttpStatus.OK);
+		return new ResponseEntity<>(toDTO.convert(message), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	ResponseEntity<AnnouncementDTO> delete(@PathVariable Long id) {
-		Announcement deleted = announcementService.delete(id);
+	ResponseEntity<MessageDTO> delete(@PathVariable Long id) {
+		Message deleted = messageService.delete(id);
 
 		if (deleted == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -77,22 +77,22 @@ public class ApiAnnouncementController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<AnnouncementDTO> add(@Validated @RequestBody AnnouncementDTO newAnnouncementDTO) {
+	public ResponseEntity<MessageDTO> add(@Validated @RequestBody MessageDTO newMessageDTO) {
 
-		Announcement savedAnnouncement = announcementService.save(toAnnouncement.convert(newAnnouncementDTO));
+		Message savedMessage = messageService.save(toMessage.convert(newMessageDTO));
 
-		return new ResponseEntity<>(toDTO.convert(savedAnnouncement), HttpStatus.CREATED);
+		return new ResponseEntity<>(toDTO.convert(savedMessage), HttpStatus.CREATED);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, value = "/{id}", consumes = "application/json")
-	public ResponseEntity<AnnouncementDTO> edit(@Validated @RequestBody AnnouncementDTO announcementDTO,
+	public ResponseEntity<MessageDTO> edit(@Validated @RequestBody MessageDTO messageDTO,
 			@PathVariable Long id) {
 
-		if (!id.equals(announcementDTO.getId())) {
+		if (!id.equals(messageDTO.getId())) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
-		Announcement persisted = announcementService.save(toAnnouncement.convert(announcementDTO));
+		Message persisted = messageService.save(toMessage.convert(messageDTO));
 
 		return new ResponseEntity<>(toDTO.convert(persisted), HttpStatus.OK);
 	}

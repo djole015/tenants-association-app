@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import association.model.Flat;
-import association.model.Announcement;
+import association.model.Message;
 import association.service.FlatService;
-import association.service.AnnouncementService;
+import association.service.MessageService;
 
 @Component
 public class TestData {
 	@Autowired
-	private AnnouncementService announcementService;
+	private MessageService messageService;
 
 	@Autowired
 	private FlatService flatService;
@@ -45,38 +45,38 @@ public class TestData {
 
 		flatService.save(f3);
 
-		Announcement a1 = new Announcement();
+		Message a1 = new Message();
 		a1.setTitle("finance");
 		a1.setDescription("empty fund");
 		a1.setType("notice");
 		a1.setFlat(f1);
 
-		announcementService.save(a1);
+		messageService.save(a1);
 
-		Announcement a2 = new Announcement();
+		Message a2 = new Message();
 		a2.setTitle("lock replacement");
 		a2.setDescription("6/15 locksmith comming");
 		a2.setType("notice");
 		a2.setFlat(f1);
 
-		announcementService.save(a2);
+		messageService.save(a2);
 
-		Announcement a3 = new Announcement();
+		Message a3 = new Message();
 		a3.setTitle("no water/low pressure");
 		a3.setDescription("6/11 from 8am-10am");
 		a3.setType("notice");
 		a3.setFlat(f2);
 
-		announcementService.save(a3);
+		messageService.save(a3);
 
-		Announcement a4 = new Announcement();
+		Message a4 = new Message();
 		a4.setTitle("facade painting");
 		a4.setDescription("in favor or against");
 		a4.setType("proposal");
 		a4.setPercentageNeeded(66D);
 		a4.setFlat(f3);
 
-		announcementService.save(a4);
+		messageService.save(a4);
 
 	}
 

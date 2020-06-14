@@ -1,0 +1,48 @@
+<div ng-controller="editMessageCtrl">
+	
+	<div class="row">
+				
+		<div class="col-12 col-lg-5">
+		
+			<form>
+
+			<div class="form-group">
+				<label for="title">Title</label>
+				<input id="title" class="form-control" ng-model="message.title"/>
+			</div>
+		
+			<div class="form-group">
+				<label for="type">Type</label>
+				<select id="type" class="form-control" ng-model="message.type" >
+				<option value="notice" ng-selected="message.type == 'notice'">Notice</option>
+				<option value="proposal" ng-selected="message.type == 'proposal'">Proposal</option>
+			</select>
+			</div>
+			
+			<div class="form-group">
+				<label for="description">Description</label>
+				<input id="description" class="form-control" ng-model="message.description"/>
+			</div>
+				
+			<div class="form-group" ng-show="message.type == 'proposal'">
+				<label for="percentage">Required Percentage</label>
+				<input id="percentage" class="form-control" ng-model="message.percentageNeeded"/>
+			</div>
+			
+			<div class="form-group" ng-if="message.type != 'proposal'" ng-model="message.percentageNeeded = ''"/>
+			</div>
+			
+			<div class="form-group">
+				<label for="flat">Flat</label>
+				<select id="flat" class="form-control" ng-model="message.flatId">
+					<option ng-repeat="flat in flats" ng-selected="flat.id == message.flatId" value="{{flat.id}}">{{flat.address}}</option>
+				</select>
+			</div>
+							
+			<button class="btn btn-primary" ng-click="doEdit()">Change</button>
+			
+			</form>
+		
+		</div>
+	</div>
+</div>

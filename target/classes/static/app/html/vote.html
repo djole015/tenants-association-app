@@ -1,10 +1,10 @@
-<div ng-controller="editAnnouncementCtrl">
+<div ng-controller="editMessageCtrl">
 
 	<h2>Voting for proposal</h2><br/>
-	<h4 ng-model="announcement">Title: {{announcement.title}} </h4>
+	<h4 ng-model="message">Title: {{message.title}} </h4>
 	<br/><br/>
 	
-	<button class="btn btn-success" ng-click="voteFor(announcement.id)">In Favor</button>
-	<button class="btn btn-danger" ng-click="voteAgainst(announcement.id)">Against</button>
+	<button class="btn btn-success" ng-click="voteFor(message.id)">In Favor</button>
+	<button class="btn btn-danger" ng-click="voteAgainst(message.id)">Against</button>
 
 </div>

@@ -18,7 +18,7 @@ public class Vote {
 	private String accept;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	private Announcement announcement;
+	private Message message;
 
 	public Long getId() {
 		return id;
@@ -36,14 +36,14 @@ public class Vote {
 		this.accept = accept;
 	}
 
-	public Announcement getAnnouncement() {
-		return announcement;
+	public Message getMessage() {
+		return message;
 	}
 
-	public void setAnnouncement(Announcement announcement) {
-		this.announcement = announcement;
-		if (announcement != null && !announcement.getVotes().contains(this)) {
-			announcement.getVotes().add(this);
+	public void setMessage(Message message) {
+		this.message = message;
+		if (message != null && !message.getVotes().contains(this)) {
+			message.getVotes().add(this);
 		}
 	}
 

@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import association.model.Announcement;
+import association.model.Message;
 import association.model.Vote;
-import association.service.AnnouncementService;
+import association.service.MessageService;
 import association.service.VoteService;
 import association.web.dto.VoteDTO;
 
@@ -19,14 +19,14 @@ public class VoteDTOToVote implements Converter<VoteDTO, Vote> {
 	@Autowired
 	private VoteService voteService;
 	@Autowired
-	private AnnouncementService announcementService;
+	private MessageService messageService;
 
 	@Override
 	public Vote convert(VoteDTO dto) {
 
-		Announcement announcement = announcementService.findOne(dto.getAnnouncementId());
+		Message message = messageService.findOne(dto.getMessageId());
 
-		if (announcement != null) {
+		if (message != null) {
 			Vote vote = null;
 
 			if (dto.getId() != null) {
@@ -37,7 +37,7 @@ public class VoteDTOToVote implements Converter<VoteDTO, Vote> {
 
 			vote.setAccept(dto.getAccept());
 
-			vote.setAnnouncement(announcement);
+			vote.setMessage(message);
 
 			return vote;
 		} else {

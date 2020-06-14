@@ -5,7 +5,7 @@ import javax.validation.constraints.Min;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class AnnouncementDTO {
+public class MessageDTO {
 
 	private Long id;
 	@NotEmpty

@@ -1,22 +1,22 @@
 var associationApp = angular.module("associationApp",["ngRoute"]);
 
-associationApp.controller("announcementsCtrl", function($scope, $http, $location){
+associationApp.controller("messagesCtrl", function($scope, $http, $location){
 	
-	$scope.announcements = [];
+	$scope.messages = [];
 	$scope.flats = [];
 	
-	$scope.newAnnouncement = {};
-	$scope.newAnnouncement.title = "";
-	$scope.newAnnouncement.type = "";
-	$scope.newAnnouncement.percentageNeeded = "";
-	$scope.newAnnouncement.description = "";
+	$scope.newMessage = {};
+	$scope.newMessage.title = "";
+	$scope.newMessage.type = "";
+	$scope.newMessage.percentageNeeded = "";
+	$scope.newMessage.description = "";
 
-	$scope.newAnnouncement.flatId = "";
+	$scope.newMessage.flatId = "";
 	
 	$scope.pageNum = 0;
 	$scope.totalPages = 1;
 	
-	var announcementsUrl = "/api/announcements";
+	var messagesUrl = "/api/messages";
 	var flatsUrl = "/api/flats";
 	
 	$scope.searchParams = {};
@@ -24,7 +24,7 @@ associationApp.controller("announcementsCtrl", function($scope, $http, $location
 	$scope.searchParams.type = "";
 	$scope.searchParams.flatId = "";
 	
-	var getAnnouncements = function(){
+	var getMessages = function(){
 		
 		var config = { params: {} };
 		
@@ -42,14 +42,14 @@ associationApp.controller("announcementsCtrl", function($scope, $http, $location
 		
 		config.params.pageNum = $scope.pageNum;
 		
-		$http.get(announcementsUrl, config).then(
+		$http.get(messagesUrl, config).then(
 			function success(res){
-				$scope.announcements = res.data;
+				$scope.messages = res.data;
 				$scope.totalPages = res.headers("totalPages");
 				getFlats();
 			},
 			function error(){
-				alert("Fetching announcements failed.");
+				alert("Fetching messages failed.");
 			}
 		);
 	}
@@ -65,53 +65,53 @@ associationApp.controller("announcementsCtrl", function($scope, $http, $location
 		);
 	}
 	
-	getAnnouncements();
+	getMessages();
 	
-	var getAnnouncement = function(id){
-		$http.get(announcementsUrl + "/" + id).then(
+	var getMessage = function(id){
+		$http.get(messagesUrl + "/" + id).then(
 				function success(res){
-					$scope.announcement = res.data;
+					$scope.message = res.data;
 				},
 				function error(){
-					alert("Fetching announcement failed.");
+					alert("Fetching message failed.");
 				}
 			);
 	}
 	
 	$scope.doAdd = function(){
 		
-		$http.post(announcementsUrl, $scope.newAnnouncement).then(
+		$http.post(messagesUrl, $scope.newMessage).then(
 			function success(){
-				getAnnouncements();
+				getMessages();
 				
-				$scope.newAnnouncement.title = "";
-				$scope.newAnnouncement.type = "";
-				$scope.newAnnouncement.percentageNeeded = "";
-				$scope.newAnnouncement.description = "";
+				$scope.newMessage.title = "";
+				$scope.newMessage.type = "";
+				$scope.newMessage.percentageNeeded = "";
+				$scope.newMessage.description = "";
 
-				$scope.newAnnouncement.flatId = "";
+				$scope.newMessage.flatId = "";
 				
 			},
 			function error(){
-				alert("Saving announcement failed!");
+				alert("Saving message failed!");
 			}
 		);
 	}
 	
 	$scope.doDelete = function(id){
-		$http.delete(announcementsUrl + "/" + id).then(
+		$http.delete(messagesUrl + "/" + id).then(
 			function success(){
-				getAnnouncements();
+				getMessages();
 			},
 			function error(){
-				alert("Removing announcement failed.");
+				alert("Removing message failed.");
 			}
 		);
 	}
 	
 	$scope.doSearch = function(){
 		$scope.pageNum = 0;
-		getAnnouncements();
+		getMessages();
 		
 		$scope.searchParams.title = "";
 		$scope.searchParams.type = "";
@@ -121,7 +121,7 @@ associationApp.controller("announcementsCtrl", function($scope, $http, $location
 	
 	$scope.changePage = function(direction){
 		$scope.pageNum = $scope.pageNum + direction;
-		getAnnouncements();
+		getMessages();
 	}
 	
 	$scope.goToEdit = function(id){
@@ -134,24 +134,24 @@ associationApp.controller("announcementsCtrl", function($scope, $http, $location
 	
 });
 
-associationApp.controller("editAnnouncementCtrl", function($scope, $http, $routeParams, $location){
+associationApp.controller("editMessageCtrl", function($scope, $http, $routeParams, $location){
 	
-	var announcementUrl = "/api/announcements/" + $routeParams.id;
+	var messageUrl = "/api/messages/" + $routeParams.id;
 	var flatsUrl = "/api/flats";
 
 	$scope.flats = [];
 	
-	$scope.announcement = {};
-	$scope.announcement.title = "";
-	$scope.announcement.type = "";
-	$scope.announcement.percentageNeeded = "";
-	$scope.announcement.description = "";
+	$scope.message = {};
+	$scope.message.title = "";
+	$scope.message.type = "";
+	$scope.message.percentageNeeded = "";
+	$scope.message.description = "";
 
-	$scope.announcement.flatId = "";
+	$scope.message.flatId = "";
 	
 	$scope.vote = {};
 	$scope.vote.accept = "";
-	$scope.vote.announcementId = "";
+	$scope.vote.messageId = "";
 	
 	
 	var getFlats = function(){
@@ -165,34 +165,34 @@ associationApp.controller("editAnnouncementCtrl", function($scope, $http, $route
 		);
 	}
 	
-	var getAnnouncement = function(){
-		$http.get(announcementUrl).then(
+	var getMessage = function(){
+		$http.get(messageUrl).then(
 			function success(res){
-				$scope.announcement = res.data;
+				$scope.message = res.data;
 			},
 			function error(){
-				alert("Fetching announcement failed.");
+				alert("Fetching message failed.");
 			}
 		);
 	}
 
 	getFlats();
-	getAnnouncement();
+	getMessage();
 	
 	$scope.doEdit = function(){
-		$http.put(announcementUrl, $scope.announcement).then(
+		$http.put(messageUrl, $scope.message).then(
 			function success(){
 				$location.path("/");
 			},
 			function error(){
-				alert("Saving announcement failed.");
+				alert("Saving message failed.");
 			}
 		);
 	}
 	
 	$scope.voteFor = function(id){
 		$scope.vote.accept = "yes";
-		$scope.vote.announcementId = id;
+		$scope.vote.messageId = id;
 		
 		$http.post("/api/votes/", $scope.vote).then(
 				function success(){
@@ -207,7 +207,7 @@ associationApp.controller("editAnnouncementCtrl", function($scope, $http, $route
 	
 	$scope.voteAgainst = function(id){
 		$scope.vote.accept = "no";
-		$scope.vote.announcementId = id;
+		$scope.vote.messageId = id;
 		
 		$http.post("/api/votes/", $scope.vote).then(
 				function success(){
@@ -224,10 +224,10 @@ associationApp.controller("editAnnouncementCtrl", function($scope, $http, $route
 associationApp.config(['$routeProvider', function($routeProvider) {
 	$routeProvider
 		.when('/', {
-			templateUrl : '/app/html/announcements.html'
+			templateUrl : '/app/html/messages.html'
 		})
 		.when('/edit/:id', {
-			templateUrl : '/app/html/edit-announcement.html'
+			templateUrl : '/app/html/edit-message.html'
 		})
 		.when('/vote/:id', {
 			templateUrl : '/app/html/vote.html'

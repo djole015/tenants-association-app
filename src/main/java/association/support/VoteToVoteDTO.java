@@ -19,7 +19,7 @@ public class VoteToVoteDTO implements Converter<Vote, VoteDTO> {
 		dto.setId(source.getId());
 		dto.setAccept(source.getAccept());
 		
-		dto.setAnnouncementId(source.getAnnouncement().getId());
+		dto.setMessageId(source.getMessage().getId());
 
 		return dto;
 	}

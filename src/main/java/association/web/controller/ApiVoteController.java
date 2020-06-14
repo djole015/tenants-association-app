@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import association.model.Vote;
-import association.service.AnnouncementService;
+import association.service.MessageService;
 import association.service.VoteService;
 import association.support.VoteDTOToVote;
 import association.support.VoteToVoteDTO;
@@ -25,7 +25,7 @@ public class ApiVoteController {
 	private VoteService voteService;
 	
 	@Autowired
-	private AnnouncementService announcementService;
+	private MessageService messageService;
 	
 	@Autowired
 	private VoteToVoteDTO toDTO;
@@ -66,7 +66,7 @@ public class ApiVoteController {
 
 		Vote savedVote = voteService.save(toVote.convert(newVoteDTO));
 		
-		announcementService.performCheck(savedVote);
+		messageService.performCheck(savedVote);
 
 		return new ResponseEntity<>(toDTO.convert(savedVote), HttpStatus.CREATED);
 	}

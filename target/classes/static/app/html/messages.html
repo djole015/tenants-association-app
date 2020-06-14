@@ -1,15 +1,15 @@
-<div ng-controller="announcementsCtrl">
+<div ng-controller="messagesCtrl">
 
 	<form>
 
 		<div class="form-group">
 			<label for="title">Title</label> 
-			<input id="title" class="form-control" ng-model="newAnnouncement.title" />
+			<input id="title" class="form-control" ng-model="newMessage.title" />
 		</div>
 
 		<div class="form-group">
 			<label for="type">Type</label> 
-			<select id="type" class="form-control" ng-model="newAnnouncement.type">
+			<select id="type" class="form-control" ng-model="newMessage.type">
 				<option value="notice">Notice</option>
 				<option value="proposal">Proposal</option>
 			</select>
@@ -17,17 +17,17 @@
 
 		<div class="form-group">
 			<label for="description">Description</label> 
-			<input id="description" class="form-control" ng-model="newAnnouncement.description" />
+			<input id="description" class="form-control" ng-model="newMessage.description" />
 		</div>
 
-		<div class="form-group" ng-show="newAnnouncement.type == 'proposal'">
+		<div class="form-group" ng-show="newMessage.type == 'proposal'">
 			<label for="percentage">Required Percentage</label>
-			 <input  id="percentage" class="form-control" ng-model="newAnnouncement.percentageNeeded" />
+			 <input  id="percentage" class="form-control" ng-model="newMessage.percentageNeeded" />
 		</div>
 
 		<div class="form-group">
 			<label for="flat">Flat</label> 
-			<select id="flat" class="form-control" ng-model="newAnnouncement.flatId">
+			<select id="flat" class="form-control" ng-model="newMessage.flatId">
 				<option ng-repeat="flat in flats" value="{{flat.id}}">{{flat.address}}</option>
 			</select>
 		</div>
@@ -66,9 +66,9 @@
 	<div class="col-12">
 		<div style="margin-bottom: 10px" class="btn-group float-right">
 			<button ng-disabled="pageNum==0" ng-click="changePage(-1)"
-				class="btn btn-primary">Prethodna</button>
+				class="btn btn-primary">Previous</button>
 			<button ng-disabled="pageNum==totalPages - 1"
-				ng-click="changePage(1)" class="btn btn-primary">Sledeca</button>
+				ng-click="changePage(1)" class="btn btn-primary">Next</button>
 		</div>
 	</div>
 
@@ -85,17 +85,17 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="a in announcements">
-				<td>{{a.title}}</td>
-				<td>{{a.type}}</td>
-				<td>{{a.description}}</td>
-				<td>{{a.percentageNeeded}}</td>
+			<tr ng-repeat="m in messages">
+				<td>{{m.title}}</td>
+				<td>{{m.type}}</td>
+				<td>{{m.description}}</td>
+				<td>{{m.percentageNeeded}}</td>
 				
-				<td>{{a.flatAddress}}</td>
+				<td>{{m.flatAddress}}</td>
 				<td>
-					<button class="btn btn-warning" ng-click="goToEdit(a.id)">Change</button>
-					<button class="btn btn-danger" ng-click="doDelete(a.id)">Delete</button>
-					<button class="btn btn-success" ng-disabled="a.flatNoOfTenants == a.noOfVotes" ng-show="a.type == 'proposal'" ng-click="goToVote(a.id)">Vote</button>
+					<button class="btn btn-warning" ng-click="goToEdit(m.id)">Change</button>
+					<button class="btn btn-danger" ng-click="doDelete(m.id)">Delete</button>
+					<button class="btn btn-success" ng-disabled="m.flatNoOfTenants == m.noOfVotes" ng-show="m.type == 'proposal'" ng-click="goToVote(m.id)">Vote</button>
 				</td>
 			</tr>
 		</tbody>

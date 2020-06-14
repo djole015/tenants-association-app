@@ -28,7 +28,7 @@ public class Flat {
 	private Integer noOfTenants;
 
 	@OneToMany(mappedBy = "flat", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Announcement> announcements = new ArrayList<>();
+	private List<Message> messages = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -70,19 +70,19 @@ public class Flat {
 		this.noOfTenants = noOfTenants;
 	}
 
-	public List<Announcement> getAnnouncements() {
-		return announcements;
+	public List<Message> getMessages() {
+		return messages;
 	}
 
-	public void setAnnouncements(List<Announcement> announcements) {
-		this.announcements = announcements;
+	public void setMessages(List<Message> messages) {
+		this.messages = messages;
 	}
 
-	public void addAnnouncement(Announcement announcement) {
-		this.announcements.add(announcement);
+	public void addAnnouncement(Message message) {
+		this.messages.add(message);
 
-		if (!this.equals(announcement.getFlat())) {
-			announcement.setFlat(this);
+		if (!this.equals(message.getFlat())) {
+			message.setFlat(this);
 		}
 	}
 }

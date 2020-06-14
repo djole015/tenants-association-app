@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Announcement {
+public class Message {
 
 	@Id
 	@GeneratedValue
@@ -33,7 +33,7 @@ public class Announcement {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Flat flat;
 
-	@OneToMany(mappedBy = "announcement", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "message", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Vote> votes = new ArrayList<>();
 
 	public Long getId() {
@@ -90,8 +90,8 @@ public class Announcement {
 
 	public void setFlat(Flat flat) {
 		this.flat = flat;
-		if (flat != null && !flat.getAnnouncements().contains(this)) {
-			flat.getAnnouncements().add(this);
+		if (flat != null && !flat.getMessages().contains(this)) {
+			flat.getMessages().add(this);
 		}
 	}
 
@@ -106,8 +106,8 @@ public class Announcement {
 	public void addVote(Vote vote) {
 		this.votes.add(vote);
 
-		if (!this.equals(vote.getAnnouncement())) {
-			vote.setAnnouncement(this);
+		if (!this.equals(vote.getMessage())) {
+			vote.setMessage(this);
 		}
 	}
 	
