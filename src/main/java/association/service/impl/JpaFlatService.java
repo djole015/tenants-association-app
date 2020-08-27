@@ -30,7 +30,7 @@ public class JpaFlatService implements FlatService {
 
 	@Override
 	public Flat findOne(Long id) {
-		return flatRepository.findOne(id);
+		return flatRepository.findById(id).get();
 	}
 
 }

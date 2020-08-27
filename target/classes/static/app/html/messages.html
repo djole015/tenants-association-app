@@ -10,7 +10,7 @@
 		<div class="form-group">
 			<label for="type">Type</label> 
 			<select id="type" class="form-control" ng-model="newMessage.type">
-				<option value="notice">Notice</option>
+				<option value="note">Note</option>
 				<option value="proposal">Proposal</option>
 			</select>
 		</div>
@@ -80,6 +80,7 @@
 				<th>Type</th>
 				<th>Description</th>
 				<th>Required Percentage</th>
+				<!-- <th>Accepted</th> -->
 				<th>Flat</th>
 				<th>Actions</th>
 			</tr>
@@ -90,7 +91,7 @@
 				<td>{{m.type}}</td>
 				<td>{{m.description}}</td>
 				<td>{{m.percentageNeeded}}</td>
-				
+				<!-- <td>{{m.accepted}}</td> -->
 				<td>{{m.flatAddress}}</td>
 				<td>
 					<button class="btn btn-warning" ng-click="goToEdit(m.id)">Change</button>

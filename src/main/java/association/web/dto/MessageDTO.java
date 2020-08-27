@@ -2,19 +2,23 @@ package association.web.dto;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 public class MessageDTO {
 
 	private Long id;
-	@NotEmpty
+	@NotBlank(message = "Message title is required")
 	private String title;
+	@Pattern(regexp = "NOTE|PROPOSAL", flags = Pattern.Flag.CASE_INSENSITIVE)
 	private String type;
 	@Min(0)
 	@Max(100)
 	private Double percentageNeeded;
 	private boolean accepted = false;
+	@Size(min = 10)
+	@NotBlank(message = "Message Description is required")
 	private String description;
 
 	private Long flatId;

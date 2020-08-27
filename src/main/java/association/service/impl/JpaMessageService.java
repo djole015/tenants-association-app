@@ -20,12 +20,12 @@ public class JpaMessageService implements MessageService {
 
 	@Override
 	public Page<Message> findAll(int pageNum) {
-		return messageRepository.findAll(new PageRequest(pageNum, 5));
+		return messageRepository.findAll(PageRequest.of(pageNum, 5));
 	}
 
 	@Override
 	public Message findOne(Long id) {
-		return messageRepository.findOne(id);
+		return messageRepository.findById(id).get();
 	}
 
 	@Override
@@ -35,10 +35,10 @@ public class JpaMessageService implements MessageService {
 
 	@Override
 	public Message delete(Long id) {
-		Message message = messageRepository.findOne(id);
+		Message message = messageRepository.findById(id).get();
 
 		if (message != null) {
-			messageRepository.delete(id);
+			messageRepository.deleteById(id);
 		}
 
 		return message;
@@ -60,7 +60,7 @@ public class JpaMessageService implements MessageService {
 			type = "%" + type + "%";
 		}
 
-		return messageRepository.search(title, type, flatId, new PageRequest(pageNum, 5));
+		return messageRepository.search(title, type, flatId, PageRequest.of(pageNum, 5));
 	}
 
 	@Override

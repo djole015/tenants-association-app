@@ -30,7 +30,7 @@ public class JpaVoteService implements VoteService {
 
 	@Override
 	public Vote findOne(Long id) {
-		return voteRepository.findOne(id);
+		return voteRepository.findById(id).get();
 	}
 
 }

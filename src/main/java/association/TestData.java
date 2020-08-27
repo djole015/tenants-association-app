@@ -48,7 +48,7 @@ public class TestData {
 		Message a1 = new Message();
 		a1.setTitle("finance");
 		a1.setDescription("empty fund");
-		a1.setType("notice");
+		a1.setType("note");
 		a1.setFlat(f1);
 
 		messageService.save(a1);
@@ -56,7 +56,7 @@ public class TestData {
 		Message a2 = new Message();
 		a2.setTitle("lock replacement");
 		a2.setDescription("6/15 locksmith comming");
-		a2.setType("notice");
+		a2.setType("note");
 		a2.setFlat(f1);
 
 		messageService.save(a2);
@@ -64,7 +64,7 @@ public class TestData {
 		Message a3 = new Message();
 		a3.setTitle("no water/low pressure");
 		a3.setDescription("6/11 from 8am-10am");
-		a3.setType("notice");
+		a3.setType("note");
 		a3.setFlat(f2);
 
 		messageService.save(a3);
